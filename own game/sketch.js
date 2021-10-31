@@ -1,6 +1,5 @@
-var PLAY;
-var END;
-var gameState = PLAY;
+
+var gameState = "PLAY";
 
 var airBalloon,airBalloonImg;
 var bird,birdAni;
@@ -41,7 +40,7 @@ function setup(){
 function draw(){
     background(210);
 
-    if(gameState === PLAY){
+    if(gameState === "PLAY"){
         if(bg.y > 700){
             bg.y = 0;
         }
@@ -59,11 +58,15 @@ function draw(){
             airBalloon.y = airBalloon.y + 10;
         }
 
-        if(airBalloon.isTouching(birdsGroup) || airBalloon.isTouching(meteorsGroup)){
-            life = life -1;
+        for(var i = 0; i < birdsGroup.length; i++){
+            if(birdsGroup.get(i).isTouching(airBalloon)){
+                birdsGroup.get(i).destroy();
+                life = life -1;
+
+            }
         }
         if(life < 1 ){
-            gameState = END
+            gameState = "END"
         }
 
         spownMeteor();
@@ -72,7 +75,7 @@ function draw(){
 
     }
     
-    if(gameState === END) {
+    if(gameState === "END") {
         text("GAME OVER",400,350)
         meteorsGroup
 
